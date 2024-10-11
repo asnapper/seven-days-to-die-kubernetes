@@ -1,0 +1,331 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: gamedata
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 50Gi
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: seven-days-config
+data:
+  serverconfig.xml: |
+    <?xml version="1.0"?>
+    <ServerSettings>
+      <!-- GENERAL SERVER SETTINGS -->
+
+      <!-- Server representation -->
+      <property name="ServerName" value="Your Server Name"/>
+      <property name="ServerDescription" value="Say something about sour server"/>
+      <property name="ServerWebsiteURL" value=""/>
+      <property name="ServerPassword" value=""/>
+      <property name="ServerLoginConfirmationText" value="Welcome kids!"/>
+      <property name="Region" value="Europe"/>
+      <property name="Language" value="English"/>
+
+      <!-- Networking -->
+      <property name="ServerPort" value="30900"/>
+      <property name="ServerVisibility" value="0"/>
+      <property name="ServerDisabledNetworkProtocols" value="SteamNetworking"/>
+      <property name="ServerMaxWorldTransferSpeedKiBs" value="2000"/>
+
+      <!-- Slots -->
+      <property name="ServerMaxPlayerCount" value="16"/>
+      <property name="ServerReservedSlots" value="4"/>
+      <property name="ServerReservedSlotsPermission" value="100"/>
+      <property name="ServerAdminSlots" value="1"/>
+      <property name="ServerAdminSlotsPermission" value="0"/>
+
+      <!-- Admin interfaces -->
+      <property name="WebDashboardEnabled" value="true"/>
+      <property name="WebDashboardPort" value="8080"/>
+      <property name="WebDashboardUrl" value=""/>
+      <property name="EnableMapRendering" value="false"/>
+
+      <property name="TelnetEnabled" value="true"/>
+      <property name="TelnetPort" value="8081"/>
+      <property name="TelnetPassword" value=""/>
+      <property name="TelnetFailedLoginLimit" value="10"/>
+      <property name="TelnetFailedLoginsBlocktime" value="10"/>
+
+      <property name="TerminalWindowEnabled" value="true"/>
+
+      <!-- Folder and file locations -->
+      <property name="AdminFileName" value="serveradmin.xml"/>
+      <property name="UserDataFolder" value="/gamedata/user" />
+
+      <!-- Other technical settings -->
+      <property name="EACEnabled" value="true"/>
+      <property name="IgnoreEOSSanctions" value="false"/>
+      <property name="HideCommandExecutionLog" value="0"/>
+      <property name="MaxUncoveredMapChunksPerPlayer" value="131072"/>
+      <property name="PersistentPlayerProfiles" value="false"/>
+      <property name="MaxChunkAge" value="-1"/>
+      <property name="SaveDataLimit" value="-1"/>
+
+      <!-- GAMEPLAY -->
+
+      <!-- World -->
+      <property name="GameWorld" value="RWG"/>
+      <property name="WorldGenSeed" value="abcdefgh"/>
+      <property name="WorldGenSize" value="10240"/>
+      <property name="GameName" value="Candy Factory"/>
+      <property name="GameMode" value="GameModeSurvival"/>
+
+      <!-- Difficulty -->
+      <property name="GameDifficulty" value="1"/>
+      <property name="BlockDamagePlayer" value="200"/>
+      <property name="BlockDamageAI" value="100"/>
+      <property name="BlockDamageAIBM" value="100"/>
+      <property name="XPMultiplier" value="100"/>
+      <property name="PlayerSafeZoneLevel" value="20"/>
+      <property name="PlayerSafeZoneHours" value="50"/>
+
+      <!--  -->
+      <property name="BuildCreate" value="false"/>
+      <property name="DayNightLength" value="60"/>
+      <property name="DayLightLength" value="18"/>
+      <property name="DeathPenalty" value="1"/>
+      <property name="DropOnDeath" value="3"/>
+      <property name="DropOnQuit" value="0"/>
+      <property name="BedrollDeadZoneSize" value="25"/>
+      <property name="BedrollExpiryTime" value="999"/>
+
+      <!-- Performance related -->
+      <property name="MaxSpawnedZombies" value="64"/>
+      <property name="MaxSpawnedAnimals" value="50"/>
+      <property name="ServerMaxAllowedViewDistance" value="12"/>
+      <property name="MaxQueuedMeshLayers" value="1000"/>
+
+      <!-- Zombie settings -->
+      <property name="EnemySpawnMode" value="true"/>
+      <property name="EnemyDifficulty" value="0"/>
+      <property name="ZombieFeralSense" value="0"/>
+      <property name="ZombieMove" value="0"/>
+      <property name="ZombieMoveNight" value="3"/>
+      <property name="ZombieFeralMove" value="3"/>
+      <property name="ZombieBMMove" value="3"/>
+      <property name="BloodMoonFrequency" value="7"/>
+      <property name="BloodMoonRange" value="0"/>
+      <property name="BloodMoonWarning" value="8"/>
+      <property name="BloodMoonEnemyCount" value="8"/>
+
+      <!-- Loot -->
+      <property name="LootAbundance" value="100"/>
+      <property name="LootRespawnDays" value="7"/>
+      <property name="AirDropFrequency" value="72"/>
+      <property name="AirDropMarker" value="true"/>
+
+      <!-- Multiplayer -->
+      <property name="PartySharedKillRange" value="100"/>
+      <property name="PlayerKillingMode" value="3"/>
+
+      <!-- Land claim options -->
+      <property name="LandClaimCount" value="3"/>
+      <property name="LandClaimSize" value="41"/>
+      <property name="LandClaimDeadZone" value="30"/>
+      <property name="LandClaimExpiryTime" value="7"/>
+      <property name="LandClaimDecayMode" value="0"/>
+      <property name="LandClaimOnlineDurabilityModifier" value="4"/>
+      <property name="LandClaimOfflineDurabilityModifier" value="4"/>
+      <property name="LandClaimOfflineDelay" value="0"/>
+
+      <property name="DynamicMeshEnabled" value="true"/>
+      <property name="DynamicMeshLandClaimOnly" value="true"/>
+      <property name="DynamicMeshLandClaimBuffer" value="3"/>
+      <property name="DynamicMeshMaxItemCache" value="3"/>
+
+      <property name="TwitchServerPermission" value="90"/>
+      <property name="TwitchBloodMoonAllowed" value="false"/>
+
+      <property name="QuestProgressionDailyLimit" value="4"/>
+      <!-- There are several game settings that you cannot change when starting a new game.
+      You can use console commands to change at least some of them ingame.
+      setgamepref BedrollDeadZoneSize 30 -->
+    </ServerSettings>
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: seven-days-admin-config
+data:
+  serveradmin.xml: |
+    <adminTools>
+      <!-- Name in any entries is optional for display purposes only -->
+      <admins>
+        <user steamID="00000000000036498" name="someadmin" permission_level="1000" />
+        <user steamID="00000000000087316" name="anotheradmin" permission_level="1000" />
+        <!-- <group steamID="103582791434672565" name="Steam Universe" permission_level_default="1000" permission_level_mod="0" /> -->
+      </admins>
+      <permissions>
+        <!-- <permission cmd="dm" permission_level="0" /> -->
+        <!-- <permission cmd="kick" permission_level="1" /> -->
+        <!-- <permission cmd="say" permission_level="1000" /> -->
+        <permission cmd="chunkcache" permission_level="1000" />
+        <permission cmd="debugshot" permission_level="1000" />
+        <permission cmd="debugweather" permission_level="1000" />
+        <permission cmd="getgamepref" permission_level="1000" />
+        <permission cmd="getgamestat" permission_level="1000" />
+        <permission cmd="getoptions" permission_level="1000" />
+        <permission cmd="gettime" permission_level="1000" />
+        <permission cmd="gfx" permission_level="1000" />
+        <permission cmd="help" permission_level="1000" />
+        <permission cmd="listplayerids" permission_level="1000" />
+        <permission cmd="listthreads" permission_level="1000" />
+        <permission cmd="memcl" permission_level="1000" />
+        <permission cmd="settempunit" permission_level="1000" />
+      </permissions>
+      <whitelist>
+        <!-- ONLY PUT ITEMS IN WHITELIST IF YOU WANT WHITELIST ONLY ENABLED!!! -->
+        <!-- If there are any items in the whitelist, the whitelist only mode is enabled -->
+        <!-- Nobody can join that ISN'T in the whitelist or admins once whitelist only mode is enabled -->
+        <!-- Name is optional for display purposes only -->
+        <!-- <user steamID="" name="" /> -->
+        <!-- <group steamID="" name="" /> -->
+      </whitelist>
+      <blacklist>
+        <!-- <blacklisted steamID="" name="" unbandate="" reason="" /> -->
+      </blacklist>
+    </adminTools>
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: seven-days-to-die
+  labels:
+    app: seven-days-to-die
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: seven-days-to-die
+  template:
+    metadata:
+      labels:
+        app: seven-days-to-die
+    spec:
+      initContainers:
+      - name: init-steamcmd
+        image: steamcmd/steamcmd:latest
+        args:
+          - steamcmd
+          - +force_install_dir
+          - /gamedata
+          - +login
+          - anonymous
+          - +app_update
+          - "294420"
+          - +quit
+        volumeMounts:
+        - name: gamedata
+          mountPath: /gamedata
+      containers:
+      - name: steamcmd
+        image: steamcmd/steamcmd:latest
+        command: ["/gamedata/startserver.sh", "-configfile=/root/serverconfig.xml"]
+        workingDir: /gamedata
+        ports:
+        - containerPort: 30900
+          protocol: UDP
+        env:
+        - name: CONFIGFILE
+          value: "/root/serverconfig.xml"
+        resources:
+          requests:
+            memory: "4Gi"
+            cpu: "500m"
+          limits:
+            memory: "20Gi"
+            cpu: "4"
+        volumeMounts:
+        - name: gamedata
+          mountPath: /gamedata
+        - name: server-config
+          mountPath: /root/serverconfig.xml
+          subPath: serverconfig.xml
+        - name: admin-config
+          mountPath: /gamedata/user/serveradmin.xml
+          subPath: serveradmin.xml
+      volumes:
+      - name: gamedata
+        persistentVolumeClaim:
+          claimName: gamedata
+      - name: server-config
+        configMap:
+          name: seven-days-config
+      - name: admin-config
+        configMap:
+          name: seven-days-admin-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: seven-days-service-tcp-30900
+  labels:
+    app: seven-days-to-die
+spec:
+  selector:
+    app: seven-days-to-die
+  type: NodePort
+  ports:
+    - name: udp-30900
+      port: 30900
+      targetPort: 30900
+      nodePort: 30900  # Specify a static node port if needed
+      protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: seven-days-service-udp-30901
+  labels:
+    app: seven-days-to-die
+spec:
+  selector:
+    app: seven-days-to-die
+  type: NodePort
+  ports:
+    - name: udp-30900
+      port: 30901
+      targetPort: 30901
+      nodePort: 30901
+      protocol: UDP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: seven-days-service-udp-30902
+  labels:
+    app: seven-days-to-die
+spec:
+  selector:
+    app: seven-days-to-die
+  type: NodePort
+  ports:
+    - name: udp-30902
+      port: 30902
+      targetPort: 30902
+      nodePort: 30902
+      protocol: UDP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: seven-days-service-udp-30903
+  labels:
+    app: seven-days-to-die
+spec:
+  selector:
+    app: seven-days-to-die
+  type: NodePort
+  ports:
+    - name: udp-30903
+      port: 30903
+      targetPort: 30903
+      nodePort: 30903
+      protocol: UDP
