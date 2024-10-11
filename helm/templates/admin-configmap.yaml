@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: seven-days-admin-config
+data:
+  serveradmin.xml: |
+{{ include "seven-days-to-die.adminConfig" . | indent 4 }}

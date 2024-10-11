@@ -1,0 +1,207 @@
+# Default values for seven-days-to-die.
+
+replicaCount: 1
+
+image:
+  repository: steamcmd/steamcmd
+  tag: latest
+  pullPolicy: IfNotPresent
+
+resources:
+  requests:
+    memory: "4Gi"
+    cpu: "500m"
+  limits:
+    memory: "20Gi"
+    cpu: "4"
+
+service:
+  type: NodePort
+  ports:
+    udp30900:
+      port: 30900
+      nodePort: 30900
+      protocol: UDP
+    udp30901:
+      port: 30901
+      nodePort: 30901
+      protocol: UDP
+    udp30902:
+      port: 30902
+      nodePort: 30902
+      protocol: UDP
+    udp30903:
+      port: 30903
+      nodePort: 30903
+      protocol: UDP
+
+persistence:
+  enabled: true
+  accessModes:
+    - ReadWriteOnce
+  size: 50Gi
+  storageClass: ""
+
+config:
+  # Server representation
+  ServerName: "Your Server Name"
+  ServerDescription: "Say something about your server"
+  ServerWebsiteURL: ""
+  ServerPassword: ""
+  ServerLoginConfirmationText: "Welcome kids!"
+  Region: "Europe"
+  Language: "English"
+
+  # Networking
+  ServerPort: 30900
+  ServerVisibility: 0
+  ServerDisabledNetworkProtocols: "SteamNetworking"
+  ServerMaxWorldTransferSpeedKiBs: 2000
+
+  # Slots
+  ServerMaxPlayerCount: 16
+  ServerReservedSlots: 4
+  ServerReservedSlotsPermission: 100
+  ServerAdminSlots: 1
+  ServerAdminSlotsPermission: 0
+
+  # Admin interfaces
+  WebDashboardEnabled: true
+  WebDashboardPort: 8080
+  WebDashboardUrl: ""
+  EnableMapRendering: false
+
+  TelnetEnabled: true
+  TelnetPort: 8081
+  TelnetPassword: ""
+  TelnetFailedLoginLimit: 10
+  TelnetFailedLoginsBlocktime: 10
+
+  TerminalWindowEnabled: true
+
+  # Folder and file locations
+  AdminFileName: "serveradmin.xml"
+  UserDataFolder: "/gamedata/user"
+
+  # Other technical settings
+  EACEnabled: true
+  IgnoreEOSSanctions: false
+  HideCommandExecutionLog: 0
+  MaxUncoveredMapChunksPerPlayer: 131072
+  PersistentPlayerProfiles: false
+  MaxChunkAge: -1
+  SaveDataLimit: -1
+
+  # World
+  GameWorld: "RWG"
+  WorldGenSeed: "abcdefgh"
+  WorldGenSize: 10240
+  GameName: "Candy Factory"
+  GameMode: "GameModeSurvival"
+
+  # Difficulty
+  GameDifficulty: 1
+  BlockDamagePlayer: 200
+  BlockDamageAI: 100
+  BlockDamageAIBM: 100
+  XPMultiplier: 100
+  PlayerSafeZoneLevel: 20
+  PlayerSafeZoneHours: 50
+
+  # Gameplay
+  BuildCreate: false
+  DayNightLength: 60
+  DayLightLength: 18
+  DeathPenalty: 1
+  DropOnDeath: 3
+  DropOnQuit: 0
+  BedrollDeadZoneSize: 25
+  BedrollExpiryTime: 999
+
+  # Performance related
+  MaxSpawnedZombies: 64
+  MaxSpawnedAnimals: 50
+  ServerMaxAllowedViewDistance: 12
+  MaxQueuedMeshLayers: 1000
+
+  # Zombie settings
+  EnemySpawnMode: true
+  EnemyDifficulty: 0
+  ZombieFeralSense: 0
+  ZombieMove: 0
+  ZombieMoveNight: 3
+  ZombieFeralMove: 3
+  ZombieBMMove: 3
+  BloodMoonFrequency: 7
+  BloodMoonRange: 0
+  BloodMoonWarning: 8
+  BloodMoonEnemyCount: 8
+
+  # Loot
+  LootAbundance: 100
+  LootRespawnDays: 7
+  AirDropFrequency: 72
+  AirDropMarker: true
+
+  # Multiplayer
+  PartySharedKillRange: 100
+  PlayerKillingMode: 3
+
+  # Land claim options
+  LandClaimCount: 3
+  LandClaimSize: 41
+  LandClaimDeadZone: 30
+  LandClaimExpiryTime: 7
+  LandClaimDecayMode: 0
+  LandClaimOnlineDurabilityModifier: 4
+  LandClaimOfflineDurabilityModifier: 4
+  LandClaimOfflineDelay: 0
+
+  # Dynamic Mesh
+  DynamicMeshEnabled: true
+  DynamicMeshLandClaimOnly: true
+  DynamicMeshLandClaimBuffer: 3
+  DynamicMeshMaxItemCache: 3
+
+  # Twitch Integration
+  TwitchServerPermission: 90
+  TwitchBloodMoonAllowed: false
+
+  # Quests
+  QuestProgressionDailyLimit: 4
+
+adminConfig:
+  admins:
+    - steamID: "00000000000036498"
+      name: "someadmin"
+      permission_level: 1000
+    - steamID: "00000000000087316"
+      name: "anotheradmin"
+      permission_level: 1000
+  permissions:
+    - cmd: "chunkcache"
+      permission_level: 1000
+    - cmd: "debugshot"
+      permission_level: 1000
+    - cmd: "debugweather"
+      permission_level: 1000
+    - cmd: "getgamepref"
+      permission_level: 1000
+    - cmd: "getgamestat"
+      permission_level: 1000
+    - cmd: "getoptions"
+      permission_level: 1000
+    - cmd: "gettime"
+      permission_level: 1000
+    - cmd: "gfx"
+      permission_level: 1000
+    - cmd: "help"
+      permission_level: 1000
+    - cmd: "listplayerids"
+      permission_level: 1000
+    - cmd: "listthreads"
+      permission_level: 1000
+    - cmd: "memcl"
+      permission_level: 1000
+    - cmd: "settempunit"
+      permission_level: 1000

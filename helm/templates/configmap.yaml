@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: seven-days-config
+data:
+  serverconfig.xml: |
+{{ include "seven-days-to-die.serverConfig" . | indent 4 }}

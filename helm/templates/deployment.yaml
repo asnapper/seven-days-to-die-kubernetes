@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: seven-days-to-die
+  labels:
+    app: seven-days-to-die
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: seven-days-to-die
+  template:
+    metadata:
+      labels:
+        app: seven-days-to-die
+    spec:
+      initContainers:
+        - name: init-steamcmd
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          args:
+            - steamcmd
+            - +force_install_dir
+            - /gamedata
+            - +login
+            - anonymous
+            - +app_update
+            - "294420"
+            - +quit
+          volumeMounts:
+            - name: gamedata
+              mountPath: /gamedata
+      containers:
+        - name: steamcmd
+          image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["/gamedata/startserver.sh", "-configfile=/root/serverconfig.xml"]
+          workingDir: /gamedata
+          ports:
+            - containerPort: {{ .Values.config.ServerPort }}
+              protocol: UDP
+          env:
+            - name: CONFIGFILE
+              value: "/root/serverconfig.xml"
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+          volumeMounts:
+            - name: gamedata
+              mountPath: /gamedata
+            - name: server-config
+              mountPath: /root/serverconfig.xml
+              subPath: serverconfig.xml
+            - name: admin-config
+              mountPath: /gamedata/user/serveradmin.xml
+              subPath: serveradmin.xml
+      volumes:
+        - name: gamedata
+          persistentVolumeClaim:
+            claimName: gamedata
+        - name: server-config
+          configMap:
+            name: seven-days-config
+        - name: admin-config
+          configMap:
+            name: seven-days-admin-config

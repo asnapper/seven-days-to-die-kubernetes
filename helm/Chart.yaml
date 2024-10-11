@@ -1,0 +1,6 @@
+apiVersion: v2
+name: seven-days-to-die
+description: A Helm chart for deploying the Seven Days to Die game server
+type: application
+version: 0.1.0
+appVersion: "latest"
